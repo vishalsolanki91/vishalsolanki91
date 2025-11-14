@@ -1,0 +1,14 @@
+        <button class="zero" onclick="addChar('0')">0</button>
+        <button onclick="addChar('.')">.</button>
+        <button onclick="calculate()">=</button>
+        <button onclick="addFunc('e')">e</button>
+    </div>
+</div>
+<script>
+let display = document.getElementById("display");
+let historyPanel = document.getElementById("history");
+const ops = ["+","-","*","/","%"];
+let dark = false;window.onload = () => { setTimeout(()=>document.getElementById('splash').style.display='none',1500); }; function toggleDarkMode(){ dark = !dark; document.body.classList.toggle('dark-mode', dark); } function playClick(){ if(navigator.vibrate) navigator.vibrate(20); } function clearDisplay(){ display.value="0"; playClick(); } function delChar(){ display.value = display.value.length>1 ? display.value.slice(0,-1) : "0"; playClick(); } function addChar(ch){ let val = display.value; if(val=="0" && ch!="%") val=""; let last = val.slice(-1); if(ops.includes(last) && ops.includes(ch)) return; display.value = val + ch; playClick(); } function addFunc(func){ if(func=="sqrt"){ display.value='Math.sqrt('+display.value+')'; } else if(func=="x2"){ display.value='('+display.value+')**2'; } else if(func=="pi"){ display.value+=Math.PI; } else if(func=="e"){ display.value+=Math.E; } playClick(); } function calculate(){ try{ let result = eval(display.value.replace('×','*').replace('÷','/')); historyPanel.innerHTML += display.value + ' = ' + result + '<br>'; display.value = result; }catch{ display.value="Error"; setTimeout(()=>display.value="0",800); } playClick(); } </script>
+
+</body>
+</html>
